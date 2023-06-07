@@ -1,6 +1,8 @@
 package org.lessons.java.library;
 
 //IMPORT
+import java.io.File;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 public class Main {
@@ -85,5 +87,36 @@ public class Main {
         //chiudo lo scanner
         scan.close();
 
+        //BONUS
+        //dentro un try-catch per gestire le eccezioni se no si arrabbia
+        try {
+            //SCRIVO
+            //creo il percorso del nuovo file
+            File catalogueFile = new File("./catalogue.txt");
+            //apro un writer
+            FileWriter myWriter = new FileWriter(catalogueFile);
+            //scrivo tutti i libri nel file
+            for (int i = 0; i < catalogue.length; i++) {
+                myWriter.write("-- " + (i + 1) + " libro --\n");
+                myWriter.write(catalogue[i].toString() + "\n");
+            }
+            //chiudo il writer
+            myWriter.close();
+
+            //LEGGO
+            System.out.println("Ora leggo il catalogo:");
+            //creo uno scanner
+            Scanner myReader = new Scanner(catalogueFile);
+            //finché ci sono righe
+            while (myReader.hasNextLine()) {
+                String line = myReader.nextLine();
+                System.out.println(line);
+            }
+            //chiudo il reader
+            myReader.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
