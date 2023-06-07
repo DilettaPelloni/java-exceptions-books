@@ -9,18 +9,34 @@ public class Book {
     private String publisher;
 
     //COSTRUTTORE
-    public Book(String title, int pages, String author, String publisher) {
+    public Book(String title, int pages, String author, String publisher) throws RuntimeException {
         //valido il titolo
-        isStringInputValid(title);
-        this.title = title;
+        if(isStringInputValid(title)) {
+            this.title = title;
+        } else {
+            throw new RuntimeException("Il campo titolo è obbligatorio e non può contenere solo spazi");
+        }
 
-        this.pages = pages;
-        //valido il l'autore
-        isStringInputValid(author);
-        this.author = author;
-        //valido il l'editor
-        isStringInputValid(publisher);
-        this.publisher = publisher;
+        //valido il numero di pagine
+        if (isPageInputValid(pages)) {
+            this.pages = pages;
+        } else {
+            throw new RuntimeException("Il numero di pagine deve essere maggiore di zero");
+        }
+
+        //valido l'autore
+        if(isStringInputValid(author)) {
+            this.author = author;
+        } else {
+            throw new RuntimeException("Il campo autore è obbligatorio e non può contenere solo spazi");
+        }
+
+        //valido l'editor
+        if(isStringInputValid(publisher)) {
+            this.publisher = publisher;
+        } else {
+            throw new RuntimeException("Il campo editore è obbligatorio e non può contenere solo spazi");
+        }
     }
 
     //GETTERS
@@ -38,13 +54,52 @@ public class Book {
     }
 
     //SETTERS
+    public void setTitle(String title) throws RuntimeException {
+        if(isStringInputValid(title)) {
+            this.title = title;
+        } else {
+            throw new RuntimeException("Il campo titolo è obbligatorio e non può contenere solo spazi");
+        }
+    }
+    public void setPages(int pages) throws RuntimeException {
+        if (isPageInputValid(pages)) {
+            this.pages = pages;
+        } else {
+            throw new RuntimeException("Il numero di pagine deve essere maggiore di zero");
+        }
+    }
+    public void setAuthor(String author) throws RuntimeException {
+        if(isStringInputValid(author)) {
+            this.author = author;
+        } else {
+            throw new RuntimeException("Il campo titolo è obbligatorio e non può contenere solo spazi");
+        }
+    }
+    public void setPublisher(String publisher) throws RuntimeException {
+        if(isStringInputValid(publisher)) {
+            this.publisher = publisher;
+        } else {
+            throw new RuntimeException("Il campo titolo è obbligatorio e non può contenere solo spazi");
+        }
+    }
 
     //METODI
-    private boolean isStringInputValid(String input) throws InvalidStringInput {
-        if (input != null && !(input.equals(""))) {
-            return true;
-        }
-        throw new InvalidStringInput();
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", pages=" + pages +
+                ", author='" + author + '\'' +
+                ", publisher='" + publisher + '\'' +
+                '}';
+    }
+
+    private boolean isStringInputValid(String input) {
+        return input != null && !input.isBlank();
+    }
+
+    private boolean isPageInputValid(int input) {
+        return input > 0;
     }
 
 }

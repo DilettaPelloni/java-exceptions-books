@@ -11,7 +11,7 @@ public class Main {
 
         //creo un array per contenere i libri
         //decido che conterrà 5 libri
-        Book[] catalogue = new Book[5];
+        Book[] catalogue = new Book[2];
 
         //entro nel ciclo
         for (int i = 0; i < catalogue.length; i++) {
@@ -44,8 +44,8 @@ public class Main {
                     book = new Book(title, pages, author, publisher);
                     //se la riga di sopra non lancia eccezioni cambio la flag
                     valid = true;
-                } catch (InvalidStringInput e) {
-                    System.out.println("I campi titolo, autore ed editor sono obbligatori!");
+                } catch (RuntimeException e) { //nel caso in cui una delle stringhe fosse vuota
+                    System.out.println(e.getMessage());
                 }
 
             } while (!valid);
@@ -54,6 +54,12 @@ public class Main {
             catalogue[i] = book;
 
         }//chiusura for
+
+        //mostro l'array
+        for (int i = 0; i < catalogue.length; i++) {
+            System.out.println("-- " + (i + 1) + " libro --");
+            System.out.println(catalogue[i].toString());
+        }
 
         //chiudo lo scanner
         scan.close();
