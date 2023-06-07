@@ -24,8 +24,12 @@ public class Main {
             //inizializzo una flag
             boolean valid = false;
 
-            //entro in un ciclo do while avanzare solamente se il dato è valido
+            //entro in un ciclo do while per avanzare solamente se il dato è valido
             do {
+                //ho fatto i metodi per la validazione degli attributi statici
+                //quindi potrei validare gli input a mano a mano che vengono inseriti
+                //richiamando i controlli dalla classe Book (es. Book.isPageInputValid())
+
                 //chiedo il titolo
                 System.out.print("Inserisci il titolo: ");
                 String title = scan.nextLine();
@@ -51,6 +55,7 @@ public class Main {
                 //chiedo l'autore
                 System.out.print("inserisci il nome dell'autore: ");
                 String author = scan.nextLine();
+
                 //chiedo l'editore
                 System.out.print("inserisci il nome dell'editore: ");
                 String publisher = scan.nextLine();

@@ -94,11 +94,12 @@ public class Book {
                 '}';
     }
 
-    private boolean isStringInputValid(String input) {
+    //metodi di verifica - sono statici così posso utilizzarli al di fuori della classe
+    public static boolean isStringInputValid(String input) {
         return input != null && !input.isBlank();
     }
 
-    private boolean isPageInputValid(int input) {
+    public static boolean isPageInputValid(int input) {
         return input > 0;
     }
 
