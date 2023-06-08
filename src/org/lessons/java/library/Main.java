@@ -1,8 +1,10 @@
 package org.lessons.java.library;
 
 //IMPORT
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -35,6 +37,7 @@ public class Main {
                 //chiedo il titolo
                 System.out.print("Inserisci il titolo: ");
                 String title = scan.nextLine();
+//                boolean verify = Book.isStringInputValid(title);
 
                 //chiedo il numero di pagine
                 //siccome parseInt potrebbe tirare un'eccezione, provo a gestirla entrando in un do-while
@@ -88,35 +91,54 @@ public class Main {
         scan.close();
 
         //BONUS
+        //preparo writer e scanner
+        FileWriter myWriter = null;
+        BufferedWriter buffer = null;
+        Scanner myReader = null;
+
         //dentro un try-catch per gestire le eccezioni se no si arrabbia
         try {
-            //SCRIVO
-            //creo il percorso del nuovo file
+            //CREO IL FILE
             File catalogueFile = new File("./catalogue.txt");
-            //apro un writer
-            FileWriter myWriter = new FileWriter(catalogueFile);
+
+            //SCRIVO
+            //apro il writer
+            myWriter = new FileWriter(catalogueFile);
+            //apro il buffered writer,
+            // che raccoglierà tutte le istruzioni di scrittura e le eseguira in un unica chiamata al file
+            buffer = new BufferedWriter(myWriter);
             //scrivo tutti i libri nel file
             for (int i = 0; i < catalogue.length; i++) {
-                myWriter.write("-- " + (i + 1) + " libro --\n");
-                myWriter.write(catalogue[i].toString() + "\n");
+                buffer.write("-- " + (i + 1) + " libro --\n");
+                buffer.write(catalogue[i].toString() + "\n");
             }
-            //chiudo il writer
-            myWriter.close();
 
             //LEGGO
             System.out.println("Ora leggo il catalogo:");
-            //creo uno scanner
-            Scanner myReader = new Scanner(catalogueFile);
+            //apro lo scanner
+            myReader = new Scanner(catalogueFile);
             //finché ci sono righe
             while (myReader.hasNextLine()) {
+                //prendo la riga
                 String line = myReader.nextLine();
+                // e la scrivo
                 System.out.println(line);
             }
-            //chiudo il reader
-            myReader.close();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
+        } finally {
+            try {
+                //chiudo i writer
+                myWriter.close();
+                buffer.close();
+                //chiudo il reader
+                myReader.close();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 }
